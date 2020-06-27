@@ -54,7 +54,7 @@ inputs = {
 
   write_kubeconfig  = true
 
-  config_output_path = "~/.kube/eks-cluster-${local.env}-v1"
+  config_output_path = "${get_terragrunt_dir()}/eks-cluster-${local.env}-v1" //~/.kube/eks-cluster-${local.env}-v1
 
 
   worker_groups = [
@@ -66,7 +66,7 @@ inputs = {
         asg_desired_capacity  = 1
         kubelet_extra_args  = "--node-labels=node.kubernetes.io/lifecycle=spot"
         suspended_processes = ["AZRebalance"]
-        additional_security_group_ids = [dependency.eks-security-groups.outputs.additional_security_group_ids ]
+        additional_security_group_ids = [dependency.eks-security-groups.outputs.additional_security_group_ids]
         public_ip               = true
         tags = [
           {
