@@ -1,0 +1,29 @@
+# Terraform
+.terraform
+*.tfstate
+*.tfstate.backup
+
+# Terragrunt
+.terragrunt-cache
+
+# OS X
+.history
+.DS_Store
+
+# IntelliJ
+.idea_modules
+*.iml
+*.iws
+*.ipr
+.idea/
+build/
+*/build/
+out/
+
+## Ignore decrypted passwords
+*.decrypted
+tf-live/global/vars/vars.tf
+tf-live/global/vars/vars-vault.yml.decrypted
+tf-modules/vault/vars.tf
+tf-modules/vault/vars-vault.yml.decrypted
+sensitive-vars.yaml
