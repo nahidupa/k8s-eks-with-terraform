@@ -27,3 +27,5 @@ tf-live/global/vars/vars-vault.yml.decrypted
 tf-modules/vault/vars.tf
 tf-modules/vault/vars-vault.yml.decrypted
 sensitive-vars.yaml
+istio
+eks-cluster-dev-v1
