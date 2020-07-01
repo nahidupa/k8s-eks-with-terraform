@@ -1,0 +1,2 @@
+istioNamespace: istio-system
+istioInjection: disabled
