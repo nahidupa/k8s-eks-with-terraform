@@ -21,7 +21,6 @@ locals {
 # Terragrunt will copy the Terraform configurations specified by the source parameter, along with any files in the
 # working directory, into a temporary folder, and execute your Terraform commands in that folder.
 terraform {
-
   source = "git::https://github.com/nahidupa/terraform-shared-modules.git//modules/helm3-local-chart?ref=v0.0.3"
 }
 
@@ -41,14 +40,12 @@ inputs = {
 
   vpc_id = local.sensitive_vars.vpc_id
 
-  ingress_worker_group_mgmt_one = [{
-    from_port = 22
-    to_port   = 22
-    protocol  = "tcp"
+  charts = "${find_in_parent_folders("istio")}/istio-1.6.3/manifests/charts/istio-operator"
 
-    cidr_blocks = [
-      "10.0.0.0/8",
-    ]
-  }]
+  name = "istio-operator-1.6.3"
+
+  k8s_config_path = "~/.kube/eks-cluster-dev-v1"
+
+  chart-values = file("values/values.yaml")
+ 
 }
-

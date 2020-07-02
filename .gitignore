@@ -29,5 +29,3 @@ tf-modules/vault/vars-vault.yml.decrypted
 sensitive-vars.yaml
 istio
 eks-cluster-dev-v1
-
-
