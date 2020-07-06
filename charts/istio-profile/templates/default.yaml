@@ -14,3 +14,5 @@ spec:
   addonComponents:
     grafana:
       enabled: true
+    kiali:
+      enabled: true

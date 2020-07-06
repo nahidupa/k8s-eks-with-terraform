@@ -1,18 +1,19 @@
-# Default values for blue-green-service.
+# Default values for blue-green-web-echo.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: nullimage
+  repository: hashicorp/http-echo
   pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "latest"
+  args: "[\"-text\", \"blue-1.0\"]"
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
-
-routeinstance : green-web-echo
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -38,8 +39,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 8600
-  targetPort: 5678
+  port: 5678
 
 ingress:
   enabled: false

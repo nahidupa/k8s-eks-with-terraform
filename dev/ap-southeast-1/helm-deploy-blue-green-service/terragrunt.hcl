@@ -21,7 +21,7 @@ locals {
 # Terragrunt will copy the Terraform configurations specified by the source parameter, along with any files in the
 # working directory, into a temporary folder, and execute your Terraform commands in that folder.
 terraform {
-  source = "git::https://github.com/nahidupa/terraform-shared-modules.git//modules/helm3-local-chart?ref=v0.0.3"
+  source = "git::https://github.com/nahidupa/terraform-shared-modules.git//modules/helm3-local-chart?ref=v0.0.4"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -40,13 +40,15 @@ inputs = {
 
   vpc_id = local.sensitive_vars.vpc_id
 
-  charts = "${find_in_parent_folders("charts")}/blue-green/service/blue-green-service"
+  charts = "${find_in_parent_folders("charts")}/blue-green/blue-green-service"
 
   name = "blue-green-service"
 
   k8s_config_path = "~/.kube/eks-cluster-dev-v1"
 
   chart-values = file("values/values.yaml")
+
+  namespace= "istio-inject-blue-green"
  
 }
 
