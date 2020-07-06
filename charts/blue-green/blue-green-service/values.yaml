@@ -1,0 +1,5 @@
+service:
+  type: ClusterIP
+  port: 8600
+  targetPort: 5678
+routeinstance: "blue-green-web-echo"

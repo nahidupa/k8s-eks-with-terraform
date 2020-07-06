@@ -1,0 +1,5 @@
+hosts: "service-mesh.dev"
+serverCertificate: /etc/istio/ingressgateway-certs/tls.crt
+privateKey: /etc/istio/ingressgateway-certs/tls.key
+httpsRedirect: false
+tlsEnabled: false

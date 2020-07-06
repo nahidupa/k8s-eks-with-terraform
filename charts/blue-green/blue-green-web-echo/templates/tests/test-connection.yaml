@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "blue-green-web-echo.fullname" . }}-test-connection"
+  labels:
+    {{- include "blue-green-web-echo.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "blue-green-web-echo.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never
