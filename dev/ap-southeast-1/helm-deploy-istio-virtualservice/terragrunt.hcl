@@ -21,8 +21,9 @@ locals {
 # Terragrunt will copy the Terraform configurations specified by the source parameter, along with any files in the
 # working directory, into a temporary folder, and execute your Terraform commands in that folder.
 terraform {
- source = "git::https://github.com/nahidupa/terraform-shared-modules.git//modules/eks-security-groups?ref=v0.0.4"
+  source = "git::https://github.com/nahidupa/terraform-shared-modules.git//modules/helm3-local-chart?ref=v0.0.4"
 }
+
 
 # Include all settings from the root terragrunt.hcl file
 include {
@@ -36,18 +37,15 @@ include {
 # These are the variables we have to pass in to use the module specified in the terragrunt configuration above
 inputs = {
   
-  environment = "${local.env}"
+  charts = "${find_in_parent_folders("charts")}/istio-virtualservice"
 
-  vpc_id = local.sensitive_vars.vpc_id
+  name = "istio-virtualservice"
 
-  ingress_worker_group_mgmt_one = [{
-    from_port = 22
-    to_port   = 22
-    protocol  = "tcp"
+  k8s_config_path = "~/.kube/eks-cluster-dev-v1"
 
-    cidr_blocks = [
-      "10.0.0.0/8",
-    ]
-  }]
+  namespace= "istio-inject-blue-green"
+
+  chart-values= file("values/values.yaml")
+ 
 }
 

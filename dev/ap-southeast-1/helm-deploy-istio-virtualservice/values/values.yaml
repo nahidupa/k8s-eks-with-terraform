@@ -1,0 +1,15 @@
+hosts: "service-mesh.dev"
+
+blueServiceDestinationHost: "blue-green-service"
+blueServicePrefix: "/v1"
+blueServiceSubset: "v1"
+
+greenServiceDestinationHost: "blue-green-service"
+greenServicePrefix: "/v2"
+greenServiceSubset: "v2"
+
+defaultServiceDestinationHost: "blue-green-service"
+defaultServicePrefix: "/"
+defaultServiceSubset: "v1"
+
+servicePortNumber: 8600

@@ -1,0 +1,28 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: istio-service-mesh-tls-gateway
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+  - port:
+      number: 80
+      name: http-service-mesh
+      protocol: HTTP
+    hosts:
+    - {{ .Values.hosts }}
+    tls:
+      httpsRedirect: {{ .Values.httpsRedirect }}  # sends 301 redirect for http requests
+{{- if .Values.tlsEnabled }}      
+  - port:
+      number: 443
+      name: https-service-mesh-istio-tls
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      serverCertificate: {{ .Values.hoserverCertificatests }} 
+      privateKey: {{ .Values.privateKey }}  
+    hosts:
+    - {{ .Values.hosts }}
+{{- end }}   

@@ -1,0 +1,78 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: istio-prod-blue-green
+spec:
+  hosts:
+  - {{ .Values.hosts }}  
+  gateways:
+  - istio-service-mesh-tls-gateway
+  http:
+  - match:
+    - uri:
+        prefix: {{ .Values.blueServicePrefix }}  
+    rewrite:
+        uri: /
+    route:
+    - destination:
+        host: {{ .Values.blueServiceDestinationHost }}   
+        subset: {{ .Values.blueServiceSubset }}  
+        port:
+          number: {{ .Values.servicePortNumber }}
+#cookie base route
+  - match:
+    - uri:
+        prefix: "/"
+      headers:
+        Cookie:
+          regex: "^(.*?; )?(x-version=v2)(;.*)?$"  
+    rewrite:
+      uri: / 
+    route:
+    - destination:
+        host: {{ .Values.greenServiceDestinationHost }}
+        subset: {{ .Values.greenServiceSubset }}
+        port:
+          number: {{ .Values.servicePortNumber }}
+
+  - match:
+    - uri:
+        prefix: {{ .Values.greenServicePrefix }}
+    rewrite:
+        uri: /
+    route:
+    - destination:
+        host: {{ .Values.greenServiceDestinationHost }}
+        subset: {{ .Values.greenServiceSubset }}
+        port:
+          number: {{ .Values.servicePortNumber }}
+#cookie base route
+  - match:
+    - uri:
+        prefix: "/"
+      headers:
+        Cookie:
+          regex: "^(.*?; )?(x-version=v2)(;.*)?$"  
+    rewrite:
+      uri: / 
+    route:
+    - destination:
+        host: {{ .Values.greenServiceDestinationHost }}
+        subset: {{ .Values.greenServiceSubset }}
+        port:
+          number: {{ .Values.servicePortNumber }}
+
+
+  - match:
+    - uri:
+        prefix: "/"
+    rewrite:
+        uri: /
+    route:
+    - destination:
+        host: {{ .Values.defaultServiceDestinationHost }}
+        # Default
+        subset: {{ .Values.defaultServiceSubset }}
+        port:
+          number: {{ .Values.servicePortNumber }}
+   

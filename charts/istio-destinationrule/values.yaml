@@ -1,0 +1,3 @@
+blueServicelabel: "blue-web-echo"
+greenServicelabel: "green-web-echo"
+ServiceName: "blue-green-service"
