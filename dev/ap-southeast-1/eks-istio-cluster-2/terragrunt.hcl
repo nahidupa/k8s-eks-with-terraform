@@ -21,7 +21,7 @@ locals {
 # Terragrunt will copy the Terraform configurations specified by the source parameter, along with any files in the
 # working directory, into a temporary folder, and execute your Terraform commands in that folder.
 terraform {
-  source = "git::https://github.com/nahidupa/terraform-shared-modules.git//modules/eks-cluster?ref=v0.0.4"
+  source = "git::https://github.com/nahidupa/terraform-shared-modules.git//modules/eks-cluster?ref=v0.0.5"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -44,9 +44,9 @@ inputs = {
   
   environment = "${local.env}"
 
-  cluster_name = "eks-cluster-${local.env}-v1"
+  cluster_name = "eks-istio-cluster-2-${local.env}-v1"
 
-  cluster_version = "1.16"
+  cluster_version = "1.18"
 
   vpc_id = local.sensitive_vars.vpc_id
 
@@ -75,7 +75,7 @@ inputs = {
             "value"               = "true"
           },
           {
-            "key"                 = "k8s.io/cluster-autoscaler/eks-cluster-${local.env}-v1-on-demand-1"
+            "key"                 = "k8s.io/cluster-autoscaler/eks-istio-cluster-2-${local.env}-v1"
             "propagate_at_launch" = "false"
             "value"               = "true"
           }
